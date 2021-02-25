@@ -5,7 +5,7 @@ using UnityEngine;
 public class FirstPersonCamera : MonoBehaviour
 {
     float rotationOnX;
-    float mouseSensitivity = 90f;
+    public float mouseSensitivity = 90f;
     public Transform player;
 
     // Start is called before the first frame update

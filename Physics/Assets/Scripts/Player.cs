@@ -3,32 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(Animator))]
+//[RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
 {
     CharacterController controller = null;
-    Animator animator = null;
 
     public float speed = 80.0f;
     public float pushPower = 2.0f;
+    private float gravityValue = -9.81f;
+
+    private bool groundedPlayer;
+
+    private Vector3 playerVelocity;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
+        }
+        
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
 
-        //controller.SimpleMove(transform.forward * vertical * speed * Time.fixedDeltaTime);
-        controller.SimpleMove(transform.up * Time.fixedDeltaTime);
-        transform.Rotate(transform.up, horizontal * speed * Time.fixedDeltaTime);
-        animator.SetFloat("Speed", vertical * speed * Time.fixedDeltaTime);
+        Vector3 move = new Vector3(horizontal, 0, vertical);
+        controller.Move(transform.forward * vertical * Time.fixedDeltaTime * speed);
+        controller.Move(transform.right * horizontal * Time.fixedDeltaTime * speed);
+
+        playerVelocity.y += gravityValue * Time.fixedDeltaTime;
+        controller.Move(playerVelocity * Time.fixedDeltaTime);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -39,19 +50,5 @@ public class Player : MonoBehaviour
 
         if (hit.moveDirection.y < -0.3f)
             return;
-
-        Vector3 pushDirection = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-        body.velocity = pushDirection * pushPower;
-
-        if (hit.gameObject.CompareTag("Enemy"))
-        {
-            Ragdoll r = GetComponent<Ragdoll>();
-
-            if (r != null)
-            {
-                r.RagdollOn = true;
-            }
-        }
-        
     }
 }

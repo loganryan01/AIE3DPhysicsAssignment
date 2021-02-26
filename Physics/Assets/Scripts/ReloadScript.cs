@@ -34,7 +34,7 @@ public class ReloadScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
             StartCoroutine(Reload());
 
-        ammoText.text = currentAmmo + "/" + maxAmmo;
+        ammoText.text = "Ammo: " + currentAmmo + "/" + maxAmmo;
     }
 
     private IEnumerator Reload()

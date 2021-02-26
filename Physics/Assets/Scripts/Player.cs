@@ -10,11 +10,16 @@ public class Player : MonoBehaviour
 
     public float speed = 80.0f;
     public float pushPower = 2.0f;
-    private float gravityValue = -9.81f;
-
-    private bool groundedPlayer;
 
     private Vector3 playerVelocity;
+
+    [HideInInspector]
+    public bool groundedPlayer;
+    [HideInInspector]
+    public bool playerOnPlatform;
+    private float gravityValue = -9.81f;
+    private float jumpHeight = 2.0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,12 +39,28 @@ public class Player : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
 
-        Vector3 move = new Vector3(horizontal, 0, vertical);
-        controller.Move(transform.forward * vertical * Time.fixedDeltaTime * speed);
-        controller.Move(transform.right * horizontal * Time.fixedDeltaTime * speed);
+        controller.Move(transform.forward * vertical * Time.deltaTime * speed);
+        controller.Move(transform.right * horizontal * Time.deltaTime * speed);
 
-        playerVelocity.y += gravityValue * Time.fixedDeltaTime;
-        controller.Move(playerVelocity * Time.fixedDeltaTime);
+        if (Input.GetButton("Jump") && groundedPlayer)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+        }
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+
+        if (playerOnPlatform && playerVelocity.y < 0)
+        {
+            playerVelocity.y = -100f;
+        }
+        else if (!playerOnPlatform && playerVelocity.y <= -90)
+        {
+            playerVelocity.y = 0;
+        }
+
+        Debug.Log(playerVelocity);
+
+        controller.Move(playerVelocity * Time.deltaTime);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -50,5 +71,9 @@ public class Player : MonoBehaviour
 
         if (hit.moveDirection.y < -0.3f)
             return;
+
+        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+
+        body.velocity = pushDir * pushPower;
     }
 }

@@ -34,6 +34,10 @@ public class Ragdoll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (RagdollOn)
+        {
+            CharacterController characterController = GetComponent<CharacterController>();
+            characterController.enabled = false;
+        }
     }
 }

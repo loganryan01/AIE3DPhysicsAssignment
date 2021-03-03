@@ -6,6 +6,7 @@ public class LaunchGernade : MonoBehaviour
 {
     public Transform spawnPoint;
     public GameObject grenade;
+    public Rifle rifleScript;
 
     float range = 10f;
     
@@ -26,5 +27,6 @@ public class LaunchGernade : MonoBehaviour
     {
         GameObject grenadeInstance = Instantiate(grenade, spawnPoint.position, spawnPoint.rotation);
         grenadeInstance.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * range, ForceMode.Impulse);
+        grenadeInstance.GetComponent<Grenade>().rifleScript = rifleScript;
     }
 }

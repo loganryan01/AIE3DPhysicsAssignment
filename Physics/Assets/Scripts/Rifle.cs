@@ -14,8 +14,9 @@ public class Rifle : MonoBehaviour
     public Transform initialPos;
     public Transform aimPosition;
 
-    private float score;
-    public Text scoreText;
+    public Text objectiveText;
+    [HideInInspector]
+    public float botsKilled;
 
     bool isAiming;
 
@@ -42,7 +43,14 @@ public class Rifle : MonoBehaviour
         else if (Input.GetButtonDown("Fire2") || ammoScript.needReload || ammoScript.magAnim.GetBool("Reloading"))
             UnAim();
 
-        scoreText.text = "Score: " + score;
+        if (botsKilled < 19)
+        {
+            objectiveText.text = "Kill all the Ragdolls";
+        }
+        else if (botsKilled == 19)
+        {
+            objectiveText.text = "Find the exit";
+        }
     }
 
     private void Shoot()
@@ -60,7 +68,7 @@ public class Rifle : MonoBehaviour
                 if (r != null && !r.RagdollOn)
                 {
                     r.RagdollOn = true;
-                    score += 100;
+                    botsKilled += 1;
                 }
             }
 

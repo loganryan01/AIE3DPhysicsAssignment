@@ -5,6 +5,8 @@ using UnityEngine;
 public class Grenade : MonoBehaviour
 {
     public GameObject explosionEffect;
+    [HideInInspector]
+    public Rifle rifleScript;
     public float delay = 3f;
 
     public float explosionForce = 10f;
@@ -29,7 +31,10 @@ public class Grenade : MonoBehaviour
                 rig.AddExplosionForce(explosionForce, transform.position, radius, 1f, ForceMode.Impulse);
 
             if (rag != null)
+            {
                 rag.RagdollOn = true;
+                rifleScript.botsKilled += 1;
+            }
         }
 
         Instantiate(explosionEffect, transform.position, transform.rotation);

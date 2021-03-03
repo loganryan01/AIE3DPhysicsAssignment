@@ -57,9 +57,6 @@ public class Player : MonoBehaviour
         {
             playerVelocity.y = 0;
         }
-
-        Debug.Log(playerVelocity);
-
         controller.Move(playerVelocity * Time.deltaTime);
     }
 

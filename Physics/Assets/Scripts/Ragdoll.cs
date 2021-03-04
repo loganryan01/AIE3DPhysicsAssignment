@@ -5,9 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Ragdoll : MonoBehaviour
 {
+    /// <summary>
+    /// Ragdolls animator
+    /// </summary>
     private Animator animator = null;
+
+    /// <summary>
+    /// Ragdolls rigidbodies
+    /// </summary>
     public List<Rigidbody> rigidbodies = new List<Rigidbody>();
 
+    /// <summary>
+    /// Turn on ragdoll mode
+    /// </summary>
     public bool RagdollOn
     {
         get { return !animator.enabled; }

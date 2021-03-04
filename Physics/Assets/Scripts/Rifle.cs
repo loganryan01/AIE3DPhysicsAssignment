@@ -45,7 +45,7 @@ public class Rifle : MonoBehaviour
 
         if (botsKilled < 19)
         {
-            objectiveText.text = "Kill all the Ragdolls";
+            objectiveText.text = "Kill all the Ragdolls in the fastest time";
         }
         else if (botsKilled == 19)
         {

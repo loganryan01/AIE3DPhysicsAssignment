@@ -91,7 +91,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6185542888996411490}
-  m_Material: {fileID: 13400000, guid: f5057851ede8a494189946ecb1e004b1, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 2647895268276866423, guid: 867c95e3b0f57944fb2792d4ace30efb, type: 3}
+  rifleScript: {fileID: 0}
   delay: 3
   explosionForce: 10
   radius: 3
